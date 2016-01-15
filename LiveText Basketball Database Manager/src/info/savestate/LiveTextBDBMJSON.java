@@ -61,7 +61,8 @@ public class LiveTextBDBMJSON {
         // savepath
         blank.append("savepath", "");
         // teams - a json object full of teams
-        blank.append("teams", new JSONObject());
+        blank.append("teams", new JSONArray());
+        blank.getJSONArray("teams").put(blankTeam());
         // stats
         blank.append("stats", new JSONObject());
         blank.getJSONObject("stats").append("home", blankStatsList());
@@ -77,11 +78,25 @@ public class LiveTextBDBMJSON {
         blank.append("freethrows", "x-x");
         blank.append("rebounds", "x");
         blank.append("turnovers", "x");
-        blank.append("startinglineup", new JSONObject());
-        blank.append("keystothegame",  new JSONObject());
-        blank.append("scoringleaders", new JSONObject());
-        blank.append("upcominggames",  new JSONObject());
-        
+        blank.append("startinglineup", new JSONArray());
+        blank.append("scoringleaders", new JSONArray());
+        blank.append("upcominggames",  new JSONArray());
+        blank.append("keystothegame",  new JSONArray());
+        for(int i=0; i<5; i++) {
+            blank.getJSONArray("startinglineup").put(blankPlayer());
+            blank.getJSONArray("scoringleaders").put(blankPlayer());
+            blank.getJSONArray("upcominggames").put(blankUpcomingGame());  
+        }
+        for(int i=0; i<3; i++) 
+            blank.getJSONArray("keystothegame").put("key to the game " + i);
+        return blank;
+    }
+    
+    private JSONObject blankUpcomingGame() {
+        JSONObject blank = new JSONObject();
+        blank.append("date", "");
+        blank.append("vs", "");
+        blank.append("time", "");
         return blank;
     }
     
@@ -105,9 +120,11 @@ public class LiveTextBDBMJSON {
     
     private JSONObject blankTeam() {
         JSONObject blank = new JSONObject();
-        blank.append("players", new JSONObject());
-        blank.append("coach", "");
+        blank.append("teamname", "");
         blank.append("mascot", "");
+        blank.append("players", new JSONArray());
+        blank.getJSONArray("players").put(blankPlayer());
+        blank.append("coach", "");
         return blank;
     }
     
