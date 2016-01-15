@@ -61,3 +61,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Netbeans Junk
+Working Folder
+LiveText Basketball Database Manager/nbproject/private
