@@ -81,18 +81,39 @@ public class LiveTextBDBMJSON {
     
     public void newTeam() {
         json.getJSONArray("teams").put(blankTeam());
+        write();
     }
     
     public void newPlayer(JSONObject team) {
         team.getJSONArray("players").put(blankPlayer());
+        write();
     }
     
     public void newUpcomingGame(JSONObject statsList) {
         statsList.getJSONArray("upcominggames").put(blankUpcomingGame());
+        write();
     }
     
     public void newKeysToTheGame(JSONObject statsList) {
         statsList.getJSONArray("keystothegame").put("key to the game");
+        write();
+    }
+    
+    public void setSavePath(String savePath) {
+        json.put("savepath", savePath);
+        write();
+    }
+    
+    public JSONArray getTeams() {
+        return json.getJSONArray("teams");
+    }
+    
+    public JSONObject getAwayStats() {
+        return json.getJSONObject("stats").getJSONObject("away");
+    }
+
+    public JSONObject getHomeStats() {
+        return json.getJSONObject("stats").getJSONObject("home");
     }
 
     private JSONObject blankDatabase() {
