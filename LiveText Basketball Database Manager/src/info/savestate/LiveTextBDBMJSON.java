@@ -78,6 +78,22 @@ public class LiveTextBDBMJSON {
             }
         }
     }
+    
+    public void newTeam() {
+        json.getJSONArray("teams").put(blankTeam());
+    }
+    
+    public void newPlayer(JSONObject team) {
+        team.getJSONArray("players").put(blankPlayer());
+    }
+    
+    public void newUpcomingGame(JSONObject statsList) {
+        statsList.getJSONArray("upcominggames").put(blankUpcomingGame());
+    }
+    
+    public void newKeysToTheGame(JSONObject statsList) {
+        statsList.getJSONArray("keystothegame").put("key to the game");
+    }
 
     private JSONObject blankDatabase() {
         JSONObject blank = new JSONObject();
@@ -85,7 +101,6 @@ public class LiveTextBDBMJSON {
         blank.put("savepath", "");
         // teams - a json object full of teams
         blank.put("teams", new JSONArray());
-        blank.getJSONArray("teams").put(blankTeam());
         // stats
         blank.put("stats", new JSONObject());
         blank.getJSONObject("stats").put("home", blankStatsList());
@@ -95,22 +110,15 @@ public class LiveTextBDBMJSON {
     
     private JSONObject blankStatsList() {
         JSONObject blank = new JSONObject();
-        blank.put("fieldgoals", "x-x");
-        blank.put("3ptfieldgoals", "x.x%");
-        blank.put("freethrows", "x-x");
-        blank.put("rebounds", "x");
-        blank.put("turnovers", "x");
+        blank.put("fieldgoals", "");
+        blank.put("3ptfieldgoals", "");
+        blank.put("freethrows", "");
+        blank.put("rebounds", "");
+        blank.put("turnovers", "");
         blank.put("startinglineup", new JSONArray());
         blank.put("scoringleaders", new JSONArray());
         blank.put("upcominggames",  new JSONArray());
         blank.put("keystothegame",  new JSONArray());
-        for(int i=0; i<5; i++) {
-            blank.getJSONArray("startinglineup").put(blankPlayer());
-            blank.getJSONArray("scoringleaders").put(blankPlayer());
-            blank.getJSONArray("upcominggames").put(blankUpcomingGame());  
-        }
-        for(int i=0; i<3; i++) 
-            blank.getJSONArray("keystothegame").put("key to the game " + i);
         return blank;
     }
     
@@ -144,7 +152,6 @@ public class LiveTextBDBMJSON {
         blank.put("teamname", "");
         blank.put("mascot", "");
         blank.put("players", new JSONArray());
-        blank.getJSONArray("players").put(blankPlayer());
         blank.put("coach", "");
         return blank;
     }
