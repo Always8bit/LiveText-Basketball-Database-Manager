@@ -20,8 +20,16 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        LiveTextBDBMJSON jsonDB = new LiveTextBDBMJSON();
+        // If the user provides a database, use it.
+        // Otherwise, use the default database.
+        LiveTextBDBMJSON jsonDB;
+        if (args.length > 0)
+            jsonDB = new LiveTextBDBMJSON(args[0]);
+        else 
+            jsonDB = new LiveTextBDBMJSON();
+        // pass this to the database manager
+        LiveTextBDBM dbm = new LiveTextBDBM(jsonDB);
+        
     }
     
 }

@@ -90,7 +90,6 @@ public class LiveTextBDBMJSON {
         blank.put("stats", new JSONObject());
         blank.getJSONObject("stats").put("home", blankStatsList());
         blank.getJSONObject("stats").put("away", blankStatsList());
-        
         return blank;
     }
     
@@ -137,7 +136,6 @@ public class LiveTextBDBMJSON {
         blank.put("rebounds", "");
         blank.put("freethrows", "");
         blank.put("freethrowattempts", "");
-        
         return blank;
     }
     
