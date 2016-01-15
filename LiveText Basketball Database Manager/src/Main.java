@@ -11,6 +11,9 @@
  *
  * @author Joseph El-Khouri
  */
+
+import info.savestate.*;
+
 public class Main {
 
     /**
@@ -18,6 +21,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        LiveTextBDBMJSON jsonDB = new LiveTextBDBMJSON();
     }
     
 }

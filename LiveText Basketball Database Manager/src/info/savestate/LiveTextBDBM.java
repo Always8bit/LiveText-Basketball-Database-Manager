@@ -15,4 +15,11 @@ package info.savestate;
  */
 public class LiveTextBDBM {
     
+    private final LiveTextBDBMJSON jsonDB;
+    
+    public LiveTextBDBM(LiveTextBDBMJSON jsonDB) {
+        this.jsonDB = jsonDB;
+    }
+    
+    
 }

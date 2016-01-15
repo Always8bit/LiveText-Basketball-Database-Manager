@@ -24,12 +24,15 @@ import org.json.*;
 public class LiveTextBDBMJSON {
     
     private JSONObject json;
-    private final int indentFactor = 2;
+    private String dbPath;
+    private static int INDENTFACTOR = 2;
+    private static String DEFAULT_PATH = "LiveTextBDBM.json";
     
-    public LiveTextBDBMJSON() { this("LiveTextBDBM.json"); }
+    public LiveTextBDBMJSON() { this(DEFAULT_PATH); }
     
     public LiveTextBDBMJSON(String dbPath) {
         
+        this.dbPath = dbPath;
         try (BufferedReader br = new BufferedReader(new FileReader(dbPath))) {
             // attempt to read in an existing JSON database
             StringBuilder sb = new StringBuilder();
@@ -43,7 +46,7 @@ public class LiveTextBDBMJSON {
             // from scratch!
             try (PrintWriter writer = new PrintWriter(dbPath, "UTF-8")) {
                 json = blankDatabase();
-                writer.print(json.toString(indentFactor));
+                writer.print(json.toString(INDENTFACTOR));
                 writer.close();
             } catch (FileNotFoundException | UnsupportedEncodingException ex1) {
                 System.out.println("Couldn't create new database! " + dbPath);
@@ -53,35 +56,55 @@ public class LiveTextBDBMJSON {
             System.out.println("Error opening database! " + dbPath);
             System.exit(-1);
         }
-        
+    }
+    
+    private void write() {
+        try (PrintWriter writer = new PrintWriter(dbPath, "UTF-8")) {
+            writer.print(json.toString(INDENTFACTOR));
+            writer.close();
+        } catch (FileNotFoundException | UnsupportedEncodingException ex1) {
+            long unixTime = System.currentTimeMillis() / 1000L;
+            System.out.println("Couldn't write to database! " + dbPath);
+            System.out.println("Making backup to " + unixTime + ".json");
+            try (PrintWriter writer = new PrintWriter(unixTime + ".json", "UTF-8")) {
+                writer.print(json.toString(INDENTFACTOR));
+                writer.close();
+            } catch (FileNotFoundException | UnsupportedEncodingException ex2) {
+                System.out.println("Couldn't write to backup database X:");
+                System.out.println("A serious error has occured! But hopefully");
+                System.out.println("this is a one time thing. If it persists, ");
+                System.out.println("let Joseph El-Khouri know!");
+                System.out.println(" --> joseph.elkhouri@gmail.com");
+            }
+        }
     }
 
     private JSONObject blankDatabase() {
         JSONObject blank = new JSONObject();
         // savepath
-        blank.append("savepath", "");
+        blank.put("savepath", "");
         // teams - a json object full of teams
-        blank.append("teams", new JSONArray());
+        blank.put("teams", new JSONArray());
         blank.getJSONArray("teams").put(blankTeam());
         // stats
-        blank.append("stats", new JSONObject());
-        blank.getJSONObject("stats").append("home", blankStatsList());
-        blank.getJSONObject("stats").append("away", blankStatsList());
+        blank.put("stats", new JSONObject());
+        blank.getJSONObject("stats").put("home", blankStatsList());
+        blank.getJSONObject("stats").put("away", blankStatsList());
         
         return blank;
     }
     
     private JSONObject blankStatsList() {
         JSONObject blank = new JSONObject();
-        blank.append("fieldgoals", "x-x");
-        blank.append("3ptfieldgoals", "x.x%");
-        blank.append("freethrows", "x-x");
-        blank.append("rebounds", "x");
-        blank.append("turnovers", "x");
-        blank.append("startinglineup", new JSONArray());
-        blank.append("scoringleaders", new JSONArray());
-        blank.append("upcominggames",  new JSONArray());
-        blank.append("keystothegame",  new JSONArray());
+        blank.put("fieldgoals", "x-x");
+        blank.put("3ptfieldgoals", "x.x%");
+        blank.put("freethrows", "x-x");
+        blank.put("rebounds", "x");
+        blank.put("turnovers", "x");
+        blank.put("startinglineup", new JSONArray());
+        blank.put("scoringleaders", new JSONArray());
+        blank.put("upcominggames",  new JSONArray());
+        blank.put("keystothegame",  new JSONArray());
         for(int i=0; i<5; i++) {
             blank.getJSONArray("startinglineup").put(blankPlayer());
             blank.getJSONArray("scoringleaders").put(blankPlayer());
@@ -94,37 +117,37 @@ public class LiveTextBDBMJSON {
     
     private JSONObject blankUpcomingGame() {
         JSONObject blank = new JSONObject();
-        blank.append("date", "");
-        blank.append("vs", "");
-        blank.append("time", "");
+        blank.put("date", "");
+        blank.put("vs", "");
+        blank.put("time", "");
         return blank;
     }
     
     private JSONObject blankPlayer() {
         JSONObject blank = new JSONObject();
-        blank.append("number", "");
-        blank.append("position", "");
-        blank.append("firstname", "");
-        blank.append("lastname", "");
-        blank.append("height", "");
-        blank.append("weight", "");
-        blank.append("year", "");
-        blank.append("hometown", "");
-        blank.append("points", "");
-        blank.append("rebounds", "");
-        blank.append("freethrows", "");
-        blank.append("freethrowattempts", "");
+        blank.put("number", "");
+        blank.put("position", "");
+        blank.put("firstname", "");
+        blank.put("lastname", "");
+        blank.put("height", "");
+        blank.put("weight", "");
+        blank.put("year", "");
+        blank.put("hometown", "");
+        blank.put("points", "");
+        blank.put("rebounds", "");
+        blank.put("freethrows", "");
+        blank.put("freethrowattempts", "");
         
         return blank;
     }
     
     private JSONObject blankTeam() {
         JSONObject blank = new JSONObject();
-        blank.append("teamname", "");
-        blank.append("mascot", "");
-        blank.append("players", new JSONArray());
+        blank.put("teamname", "");
+        blank.put("mascot", "");
+        blank.put("players", new JSONArray());
         blank.getJSONArray("players").put(blankPlayer());
-        blank.append("coach", "");
+        blank.put("coach", "");
         return blank;
     }
     
