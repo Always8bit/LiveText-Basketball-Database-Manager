@@ -21,5 +21,4 @@ public class LiveTextBDBM {
         this.jsonDB = jsonDB;
     }
     
-    
 }
