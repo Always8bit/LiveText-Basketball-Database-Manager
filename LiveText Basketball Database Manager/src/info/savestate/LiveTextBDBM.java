@@ -196,6 +196,17 @@ public class LiveTextBDBM {
             System.out.println("Add players to your team!");
 
             boolean keepAdding = true;
+            
+            System.out.print("Add players? Y/N -> ");
+            line = sc.nextLine();
+            if (!line.isEmpty()) {
+                if (line.toLowerCase().charAt(0) != 'y') {
+                    keepAdding = false;
+                }
+            } else {
+                keepAdding = false;
+            }
+            
             while(keepAdding) {
                 
                 addNewPlayer(team);
@@ -257,11 +268,6 @@ public class LiveTextBDBM {
         String line;
         
         if(!quick) {
-        
-            System.out.print("NUMBER (" + player.getString("number") + ") --> ");
-            line = sc.nextLine();
-            if (!line.isEmpty())
-                player.put("number", line);
 
             System.out.print("FIRSTNAME (" + player.getString("firstname") + ") --> ");
             line = sc.nextLine();
@@ -277,6 +283,21 @@ public class LiveTextBDBM {
             line = sc.nextLine();
             if (!line.isEmpty())
                 player.put("position", line);
+            
+            System.out.print("NUMBER (" + player.getString("number") + ") --> ");
+            line = sc.nextLine();
+            if (!line.isEmpty())
+                player.put("number", line);
+
+            System.out.print("HEIGHT (" + player.getString("height") + ") --> ");
+            line = sc.nextLine();
+            if (!line.isEmpty())
+                player.put("height", line);
+
+            System.out.print("WEIGHT (" + player.getString("weight") + ") --> ");
+            line = sc.nextLine();
+            if (!line.isEmpty())
+                player.put("weight", line);
 
             System.out.print("YEAR (" + player.getString("year") + ") --> ");
             line = sc.nextLine();
@@ -287,38 +308,29 @@ public class LiveTextBDBM {
             line = sc.nextLine();
             if (!line.isEmpty())
                 player.put("hometown", line);
+        } else {
 
-            System.out.print("WEIGHT (" + player.getString("weight") + ") --> ");
+            System.out.print("POINTS (" + player.getString("points") + ") --> ");
             line = sc.nextLine();
             if (!line.isEmpty())
-                player.put("weight", line);
+                player.put("points", line);
 
-            System.out.print("HEIGHT (" + player.getString("height") + ") --> ");
+            System.out.print("FREETHROWS (" + player.getString("freethrows") + ") --> ");
             line = sc.nextLine();
             if (!line.isEmpty())
-                player.put("height", line);
-        
+                player.put("freethrows", line);
+
+            System.out.print("FREETHROW ATTEMPTS (" + player.getString("freethrowattempts") + ") --> ");
+            line = sc.nextLine();
+            if (!line.isEmpty())
+                player.put("freethrowattempts", line);
+
+            System.out.print("REBOUNDS (" + player.getString("rebounds") + ") --> ");
+            line = sc.nextLine();
+            if (!line.isEmpty())
+                player.put("rebounds", line);
+            
         }
-
-        System.out.print("POINTS (" + player.getString("points") + ") --> ");
-        line = sc.nextLine();
-        if (!line.isEmpty())
-            player.put("points", line);
-
-        System.out.print("FREETHROWS (" + player.getString("freethrows") + ") --> ");
-        line = sc.nextLine();
-        if (!line.isEmpty())
-            player.put("freethrows", line);
-
-        System.out.print("FREETHROW ATTEMPTS (" + player.getString("freethrowattempts") + ") --> ");
-        line = sc.nextLine();
-        if (!line.isEmpty())
-            player.put("freethrowattempts", line);
-
-        System.out.print("REBOUNDS (" + player.getString("rebounds") + ") --> ");
-        line = sc.nextLine();
-        if (!line.isEmpty())
-            player.put("rebounds", line);
 
         jsonDB.write();
         

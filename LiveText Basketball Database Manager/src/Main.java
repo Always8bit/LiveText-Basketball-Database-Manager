@@ -14,6 +14,7 @@
 
 import info.savestate.*;
 import java.util.Scanner;
+import org.json.*;
 
 public class Main {
 
@@ -49,9 +50,65 @@ public class Main {
             System.out.println(" [8] Edit Existing Player");
             System.out.println(" [9] Update Savepath");
             Scanner sc = new Scanner(System.in);
-            sc.nextLine();
+            String line = sc.nextLine();
+            if (line.isEmpty()) continue;
+            switch(line.toLowerCase().charAt(0)) {
+                case '0':
+                    dbm.updateStats();
+                    break;
+                case '1':
+                    dbm.updateStartingLineup(askHomeAway());
+                    break;
+                case '2':
+                    dbm.updateKeysToTheGame(askHomeAway());
+                    break;
+                case '3':
+                    dbm.updateScoringLeaders(askHomeAway());
+                    break;
+                case '4':
+                    dbm.updateUpcomingGames(askHomeAway());
+                    break;
+                case '5':
+                    dbm.addNewTeam();
+                    break;
+                case '6':
+                    dbm.addNewPlayer(dbm.pickOutTeam());
+                    break;
+                case '7':
+                    editExistingTeam(dbm);
+                    break;
+                case '8':
+                    editExistingPlayer(dbm);
+                    break;
+                case '9':
+                    dbm.updateSavePath();
+                    break;
+            }
         }
         
+    }
+    
+    public static void editExistingPlayer(LiveTextBDBM dbm) {
+        JSONObject player = dbm.pickOutPlayer();
+        if (player == null) return;
+        dbm.editPlayer(player, false);
+    }
+    
+    public static void editExistingTeam(LiveTextBDBM dbm) {
+        JSONObject team = dbm.pickOutTeam();
+        if (team == null) return;
+        dbm.editTeam(team, false);
+    }
+    
+    public static boolean askHomeAway() {
+        System.out.println(" [0] Home Team");
+        System.out.println(" [1] Away Team");
+        Scanner sc = new Scanner(System.in);
+        String line = sc.nextLine();
+        if (line.isEmpty()) return askHomeAway();
+        if (line.charAt(0) == '0') return true;
+        if (line.charAt(0) == '1') return false;
+        return askHomeAway();
     }
     
 }
