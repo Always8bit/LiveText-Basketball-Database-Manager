@@ -58,7 +58,7 @@ public class LiveTextBDBMJSON {
         }
     }
     
-    private void write() {
+    public void write() {
         try (PrintWriter writer = new PrintWriter(dbPath, "UTF-8")) {
             writer.print(json.toString(INDENTFACTOR));
             writer.close();
@@ -79,13 +79,8 @@ public class LiveTextBDBMJSON {
         }
     }
     
-    public void newTeam() {
-        json.getJSONArray("teams").put(blankTeam());
-        write();
-    }
-    
-    public void newPlayer(JSONObject team) {
-        team.getJSONArray("players").put(blankPlayer());
+    public void addTeam(JSONObject team) {
+        json.getJSONArray("teams").put(team);
         write();
     }
     
@@ -126,7 +121,7 @@ public class LiveTextBDBMJSON {
     }
     
     
-    private JSONObject blankDatabase() {
+    public static JSONObject blankDatabase() {
         JSONObject blank = new JSONObject();
         // savepath
         blank.put("savepath", "");
@@ -140,8 +135,8 @@ public class LiveTextBDBMJSON {
         return blank;
     }
     
-    private JSONObject blankStatsList() {
-        JSONObject blank = new JSONObject();
+    public static JSONObject blankStatsList() {
+        JSONObject blank = new JSONObject();        
         blank.put("fieldgoals", "");
         blank.put("3ptfieldgoals", "");
         blank.put("freethrows", "");
@@ -154,7 +149,7 @@ public class LiveTextBDBMJSON {
         return blank;
     }
     
-    private JSONObject blankUpcomingGame() {
+    public static JSONObject blankUpcomingGame() {
         JSONObject blank = new JSONObject();
         blank.put("date", "");
         blank.put("vs", "");
@@ -162,7 +157,7 @@ public class LiveTextBDBMJSON {
         return blank;
     }
     
-    private JSONObject blankPlayer() {
+    public static JSONObject blankPlayer() {
         JSONObject blank = new JSONObject();
         blank.put("number", "");
         blank.put("position", "");
@@ -179,12 +174,10 @@ public class LiveTextBDBMJSON {
         return blank;
     }
     
-    private JSONObject blankTeam() {
+    public static JSONObject blankTeam() {
         JSONObject blank = new JSONObject();
         blank.put("teamname", "");
-        blank.put("mascot", "");
         blank.put("players", new JSONArray());
-        blank.put("coach", "");
         return blank;
     }
 
