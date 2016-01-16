@@ -49,6 +49,7 @@ public class Main {
             System.out.println(" [7] Edit Existing Team");
             System.out.println(" [8] Edit Existing Player");
             System.out.println(" [9] Quick Update Live Stats");
+            System.out.println(" [b] Update Breaktime Stats");
             System.out.println(" [r] Remove Existing Player");
             System.out.println(" [s] Update Savepath");
             System.out.print(" --> ");
@@ -92,6 +93,10 @@ public class Main {
                 case 's':
                     dbm.updateSavePath();
                     break;
+                case 'b':
+                    dbm.updateBreaktimeStats(askHomeAway());
+                    break;
+                    
             }
         }
         
@@ -117,6 +122,7 @@ public class Main {
     public static boolean askHomeAway() {
         System.out.println(" [0] Home Team");
         System.out.println(" [1] Away Team");
+        System.out.print(" ---> ");
         Scanner sc = new Scanner(System.in);
         String line = sc.nextLine();
         if (line.isEmpty()) return askHomeAway();
