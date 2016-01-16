@@ -28,6 +28,55 @@ public class LiveTextBDBM {
         return jsonDB;
     }
     
+    public void updateStats() {
+        JSONObject player = pickOutPlayer();
+        if (player == null) {
+            System.out.println("Stats not updated!");
+            return;
+        }
+        editPlayer(player, true);
+        jsonDB.setLive(player);
+    }
+    
+    public JSONObject pickOutPlayer() {
+        System.out.println("Browse for player...");
+        JSONObject team = pickOutTeam();
+        if (team == null) return null;
+        System.out.print("Player # --> ");
+        Scanner sc = new Scanner(System.in);
+        String line = sc.nextLine();
+        if (line.isEmpty()) return null;
+        JSONArray players = team.getJSONArray("players");
+        for (int i=0; i<players.length(); i++) {
+            if (players.getJSONObject(i).getString("number").equals(line)) {
+                return players.getJSONObject(i);
+            }
+        }
+        System.out.println("Player not found!");
+        return null;
+    }
+    
+    public JSONObject pickOutTeam() {
+        System.out.println("Browse for team...");
+        JSONArray teams = jsonDB.getTeams();
+        for (int i=0; i<teams.length(); i++) {
+            System.out.println(" [" + i + "] " + teams.getJSONObject(i).getString("teamname"));
+        }
+        System.out.print("Pick a team -> ");
+        Scanner sc = new Scanner(System.in);
+        String line = sc.nextLine();
+        if (line.isEmpty()) {
+            return null;
+        }
+        try {
+            int index = Integer.parseInt(line);
+            JSONObject returnTeam = teams.getJSONObject(index);
+            return returnTeam;
+        } catch (NumberFormatException | JSONException e) {
+            return pickOutTeam();
+        }
+    }
+    
     public void addNewTeam() {
         JSONObject newTeam = LiveTextBDBMJSON.blankTeam();
         editTeam(newTeam, false);

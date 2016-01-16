@@ -84,16 +84,6 @@ public class LiveTextBDBMJSON {
         write();
     }
     
-    public void newUpcomingGame(JSONObject statsList) {
-        statsList.getJSONArray("upcominggames").put(blankUpcomingGame());
-        write();
-    }
-    
-    public void newKeysToTheGame(JSONObject statsList) {
-        statsList.getJSONArray("keystothegame").put("key to the game");
-        write();
-    }
-    
     public void setSavePath(String savePath) {
         json.put("savepath", savePath);
         write();
