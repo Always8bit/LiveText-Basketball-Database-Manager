@@ -115,7 +115,15 @@ public class LiveTextBDBMJSON {
     public JSONObject getHomeStats() {
         return json.getJSONObject("stats").getJSONObject("home");
     }
-
+    
+    public JSONObject getLive() {
+        return json.getJSONObject("live");
+    }
+    
+    public void setLive(JSONObject player) {
+        json.put("live", player);
+    }
+    
     private JSONObject blankDatabase() {
         JSONObject blank = new JSONObject();
         // savepath
@@ -126,6 +134,7 @@ public class LiveTextBDBMJSON {
         blank.put("stats", new JSONObject());
         blank.getJSONObject("stats").put("home", blankStatsList());
         blank.getJSONObject("stats").put("away", blankStatsList());
+        blank.put("live", blankPlayer());
         return blank;
     }
     
