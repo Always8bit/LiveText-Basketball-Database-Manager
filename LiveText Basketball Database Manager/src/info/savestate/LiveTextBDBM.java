@@ -77,6 +77,103 @@ public class LiveTextBDBM {
         }
     }
     
+    public void updateSavePath() {
+        System.out.println("Enter a blank line to not change a current value");
+        Scanner sc = new Scanner(System.in);
+        
+        String line;
+        
+        System.out.print("LTDB Savepath (" + jsonDB.getSavePath() + ") --> ");
+        line = sc.nextLine();
+        if (!line.isEmpty())
+            jsonDB.setSavePath(line);
+    }
+    
+    public void updateStartingLineup(boolean homeAway) {
+        
+        JSONArray startingLineup = new JSONArray();
+        for (int i=0; i<5; i++) {
+            System.out.println(i + "/5 starting lineup players ...");
+            JSONObject player = pickOutPlayer();
+            if (player == null) return;
+            editPlayer(player, true);
+            startingLineup.put(player);
+        }
+        
+        if (homeAway) jsonDB.getHomeStats().put("startinglineup", startingLineup);
+        else jsonDB.getAwayStats().put("startinglineup", startingLineup);
+        
+        jsonDB.write();
+    }
+    
+    
+    public void updateKeysToTheGame(boolean homeAway) {
+        JSONArray keys = new JSONArray();
+        for (int i=0; i<3; i++) {
+            System.out.print("Key " + i + "/3 --> ");
+            Scanner sc = new Scanner(System.in);
+            String line = sc.nextLine();
+            if (!line.isEmpty())
+                keys.put(line);
+        }
+
+        if (homeAway) jsonDB.getHomeStats().put("keystothegame", keys);
+        else jsonDB.getAwayStats().put("keystothegame", keys);
+        
+        jsonDB.write();
+    }
+    
+    public void updateScoringLeaders(boolean homeAway) {
+        
+        JSONArray scoringLeaders = new JSONArray();
+        for (int i=0; i<4; i++) {
+            System.out.println(i + "/4 scoring leaders ...");
+            JSONObject player = pickOutPlayer();
+            if (player == null) return;
+            editPlayer(player, true);
+            scoringLeaders.put(player);
+        }
+
+        if (homeAway) jsonDB.getHomeStats().put("scoringleaders", scoringLeaders);
+        else jsonDB.getAwayStats().put("scoringleaders", scoringLeaders);
+
+        jsonDB.write();
+    } 
+    
+    public void updateUpcomingGames(boolean homeAway) {
+        
+        JSONArray games = new JSONArray();
+        for (int i=0; i<5; i++) {
+            System.out.println(i + "/5 games ...");
+            Scanner sc = new Scanner(System.in);
+            String line;
+
+            JSONObject game = LiveTextBDBMJSON.blankUpcomingGame();
+            
+            System.out.print("DATE --> ");
+            line = sc.nextLine();
+            if (!line.isEmpty())
+                game.put("date", line);
+
+            System.out.print("VS --> ");
+            line = sc.nextLine();
+            if (!line.isEmpty())
+                game.put("vs", line);
+
+            System.out.print("TIME --> ");
+            line = sc.nextLine();
+            if (!line.isEmpty())
+                game.put("time", line);
+            
+            games.put(game);
+        }
+
+        if (homeAway) jsonDB.getHomeStats().put("upcominggames", games);
+        else jsonDB.getAwayStats().put("upcominggames", games);
+
+        jsonDB.write();
+    } 
+    
     public void addNewTeam() {
         JSONObject newTeam = LiveTextBDBMJSON.blankTeam();
         editTeam(newTeam, false);

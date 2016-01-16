@@ -110,6 +110,9 @@ public class LiveTextBDBMJSON {
         return json.getJSONObject("live");
     }
     
+    public String getSavePath() {
+        return json.getString("savepath");
+    }
     
     public static JSONObject blankDatabase() {
         JSONObject blank = new JSONObject();
