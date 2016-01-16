@@ -325,4 +325,26 @@ public class LiveTextBDBM {
         System.out.println("Player update complete.");
     } 
     
+    public String livePlayerAsString() {
+        StringBuilder sb = new StringBuilder();
+        // # P [First Last] xxxLBS | x' x" | XX. | City, ST
+        // PTS: XX - FT: XX - FTA: XX - RB: XX
+        JSONObject player = jsonDB.getLive();
+        sb.append("#").append(player.getString("number")).append(" ")
+                .append(player.getString("position"))
+                .append(" [")
+                    .append(player.getString("firstname")).append(" ").append(player.getString("lastname"))
+                .append("] ")
+                .append(player.getString("weight")).append("LBS | ")
+                .append(player.getString("height")).append(" | ")
+                .append(player.getString("year")).append(" | ")
+                .append(player.getString("hometown")).append("\n");
+
+        sb.append("PTS: ").append(player.getString("points"))
+                .append(" - FT: ").append(player.getString("freethrows"))
+                .append(" - FTA: ").append(player.getString("freethrowattempts"))
+                .append(" - RB: ").append(player.getString("rebounds"));
+        return sb.toString();
+    }
+    
 }

@@ -77,6 +77,17 @@ public class LiveTextBDBMJSON {
                 System.out.println(" --> joseph.elkhouri@gmail.com");
             }
         }
+        
+        PrintWriter out;
+        try {
+            out = new PrintWriter(getSavePath());
+            out.print(getKeyValues());
+            out.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Could not export to LT Key-Value pairs!!!");
+            System.out.println("Savepath: " + getSavePath());
+        }
+
     }
     
     public void addTeam(JSONObject team) {
