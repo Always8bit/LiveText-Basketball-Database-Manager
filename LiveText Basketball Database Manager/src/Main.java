@@ -39,7 +39,7 @@ public class Main {
             System.out.println(dbm.livePlayerAsString());
             System.out.println(" ----------------------- ");
             System.out.println("What would you like to do?");
-            System.out.println(" [0] Quick Update Live Stats");
+            System.out.println(" [0] Update Live Stats");
             System.out.println(" [1] Update Starting Lineup");
             System.out.println(" [2] Update Keys to the Game");
             System.out.println(" [3] Update Scoring Leaders");
@@ -48,7 +48,10 @@ public class Main {
             System.out.println(" [6] Add New Player");
             System.out.println(" [7] Edit Existing Team");
             System.out.println(" [8] Edit Existing Player");
-            System.out.println(" [9] Update Savepath");
+            System.out.println(" [9] Quick Update Live Stats");
+            System.out.println(" [r] Remove Existing Player");
+            System.out.println(" [s] Update Savepath");
+            System.out.print(" --> ");
             Scanner sc = new Scanner(System.in);
             String line = sc.nextLine();
             if (line.isEmpty()) continue;
@@ -81,11 +84,22 @@ public class Main {
                     editExistingPlayer(dbm);
                     break;
                 case '9':
+                    dbm.editPlayer(dbm.getJsonDB().getLive(), true);
+                    break;
+                case 'r':
+                    removeExistingPlayer(dbm);
+                    break;
+                case 's':
                     dbm.updateSavePath();
                     break;
             }
         }
         
+    }
+    
+
+    private static void removeExistingPlayer(LiveTextBDBM dbm) {
+        dbm.pickOutPlayerAndRemove();
     }
     
     public static void editExistingPlayer(LiveTextBDBM dbm) {
@@ -110,5 +124,4 @@ public class Main {
         if (line.charAt(0) == '1') return false;
         return askHomeAway();
     }
-    
 }

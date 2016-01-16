@@ -290,18 +290,18 @@ public class LiveTextBDBMJSON {
         
         stats = json.getJSONObject("live");
         
-        sb.append("LTDB_LIVE_FT  = ").append(stats.getString("freethrows")).append(n);
-        sb.append("LTDB_LIVE_N   = ").append(stats.getString("number")).append(n);
-        sb.append("LTDB_LIVE_RB  = ").append(stats.getString("rebounds")).append(n);
-        sb.append("LTDB_LIVE_FN  = ").append(stats.getString("firstname")).append(n);
-        sb.append("LTDB_LIVE_HT  = ").append(stats.getString("hometown")).append(n);
-        sb.append("LTDB_LIVE_Y   = ").append(stats.getString("year")).append(n);
-        sb.append("LTDB_LIVE_FTA = ").append(stats.getString("freethrowattempts")).append(n);
-        sb.append("LTDB_LIVE_W   = ").append(stats.getString("weight")).append(n);
-        sb.append("LTDB_LIVE_P   = ").append(stats.getString("position")).append(n);
-        sb.append("LTDB_LIVE_LN  = ").append(stats.getString("lastname")).append(n);
-        sb.append("LTDB_LIVE_H   = ").append(stats.getString("height")).append(n);
-        sb.append("LTDB_LIVE_PTS = ").append(stats.getString("points")).append(n);
+        sb.append("LTDB_LIVE_FT  = ").append(stats.getString("freethrows").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_N   = ").append(stats.getString("number").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_RB  = ").append(stats.getString("rebounds").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_FN  = ").append(stats.getString("firstname").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_HT  = ").append(stats.getString("hometown").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_Y   = ").append(stats.getString("year").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_FTA = ").append(stats.getString("freethrowattempts").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_W   = ").append(stats.getString("weight").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_P   = ").append(stats.getString("position").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_LN  = ").append(stats.getString("lastname").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_H   = ").append(stats.getString("height").toUpperCase()).append(n);
+        sb.append("LTDB_LIVE_PTS = ").append(stats.getString("points").toUpperCase()).append(n);
         
         sb.append(n);
         

@@ -38,15 +38,85 @@ public class LiveTextBDBM {
         jsonDB.setLive(player);
     }
     
+    public void updateBreaktimeStats(boolean homeAway) {
+        System.out.println("Enter a blank line to not change a current value");
+        Scanner sc = new Scanner(System.in);
+        String line;
+        
+        JSONObject stats;
+        if (homeAway) stats = jsonDB.getHomeStats();
+        else stats = jsonDB.getAwayStats();
+        
+        
+        System.out.print("freethrows (" + stats.getString("freethrows") + ") --> ");
+        line = sc.nextLine();
+        if (!line.isEmpty())
+            stats.put("freethrows", line);
+
+        System.out.print("rebounds (" + stats.getString("rebounds") + ") --> ");
+        line = sc.nextLine();
+        if (!line.isEmpty())
+            stats.put("rebounds", line);
+
+        System.out.print("fieldgoals (" + stats.getString("fieldgoals") + ") --> ");
+        line = sc.nextLine();
+        if (!line.isEmpty())
+            stats.put("fieldgoals", line);
+
+        System.out.print("turnovers (" + stats.getString("turnovers") + ") --> ");
+        line = sc.nextLine();
+        if (!line.isEmpty())
+            stats.put("turnovers", line);
+
+        System.out.print("3ptfieldgoals (" + stats.getString("3ptfieldgoals") + ") --> ");
+        line = sc.nextLine();
+        if (!line.isEmpty())
+            stats.put("3ptfieldgoals", line);
+        
+        jsonDB.write();
+    }
+
+    public void pickOutPlayerAndRemove() {
+        System.out.println("Browse for player to delete...");
+        JSONObject team = pickOutTeam();
+        if (team == null) return;
+        JSONArray players = team.getJSONArray("players");
+        for (int i=0; i<players.length(); i++) {
+            JSONObject player = players.getJSONObject(i);
+            System.out.println(" [" + player.getString("number") + "] "
+                                    + player.getString("firstname") + " "
+                                    + player.getString("lastname"));
+        }
+        System.out.print("Player # --> ");
+        Scanner sc = new Scanner(System.in);
+        String line = sc.nextLine();
+        if (line.isEmpty()) return;
+        for (int i=0; i<players.length(); i++) {
+            if (players.getJSONObject(i).getString("number").equals(line)) {
+                players.remove(i);
+                System.out.println("Removed!");
+                return;
+            }
+        }
+        System.out.println("Player not found!");
+        jsonDB.write();
+    }
+    
     public JSONObject pickOutPlayer() {
         System.out.println("Browse for player...");
         JSONObject team = pickOutTeam();
         if (team == null) return null;
+        JSONArray players = team.getJSONArray("players");
+        for (int i=0; i<players.length(); i++) {
+            JSONObject player = players.getJSONObject(i);
+            System.out.println(" [" + player.getString("number") + "] "
+                                    + player.getString("firstname") + " "
+                                    + player.getString("lastname"));
+        }
         System.out.print("Player # --> ");
         Scanner sc = new Scanner(System.in);
         String line = sc.nextLine();
         if (line.isEmpty()) return null;
-        JSONArray players = team.getJSONArray("players");
         for (int i=0; i<players.length(); i++) {
             if (players.getJSONObject(i).getString("number").equals(line)) {
                 return players.getJSONObject(i);
@@ -93,10 +163,9 @@ public class LiveTextBDBM {
         
         JSONArray startingLineup = new JSONArray();
         for (int i=0; i<5; i++) {
-            System.out.println(i + "/5 starting lineup players ...");
+            System.out.println((i+1) + "/5 starting lineup players ...");
             JSONObject player = pickOutPlayer();
             if (player == null) return;
-            editPlayer(player, true);
             startingLineup.put(player);
         }
         
@@ -110,7 +179,7 @@ public class LiveTextBDBM {
     public void updateKeysToTheGame(boolean homeAway) {
         JSONArray keys = new JSONArray();
         for (int i=0; i<3; i++) {
-            System.out.print("Key " + i + "/3 --> ");
+            System.out.print("Key " + (i+1) + "/3 --> ");
             Scanner sc = new Scanner(System.in);
             String line = sc.nextLine();
             if (!line.isEmpty())
@@ -127,7 +196,7 @@ public class LiveTextBDBM {
         
         JSONArray scoringLeaders = new JSONArray();
         for (int i=0; i<4; i++) {
-            System.out.println(i + "/4 scoring leaders ...");
+            System.out.println((i+1) + "/4 scoring leaders ...");
             JSONObject player = pickOutPlayer();
             if (player == null) return;
             editPlayer(player, true);
@@ -144,7 +213,7 @@ public class LiveTextBDBM {
         
         JSONArray games = new JSONArray();
         for (int i=0; i<5; i++) {
-            System.out.println(i + "/5 games ...");
+            System.out.println((i+1) + "/5 games ...");
             Scanner sc = new Scanner(System.in);
             String line;
 
